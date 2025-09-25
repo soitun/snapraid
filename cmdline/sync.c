@@ -1316,6 +1316,7 @@ static int state_sync_process(struct snapraid_state* state, struct snapraid_pari
 
 			/* before writing the new content file we ensure that */
 			/* the parity is really written flushing the disk cache */
+			io_flush(&io);
 			for (l = 0; l < state->level; ++l) {
 				ret = parity_sync(&parity_handle[l]);
 				if (ret == -1) {
@@ -1347,6 +1348,7 @@ end:
 
 	/* before returning we ensure that */
 	/* the parity is really written flushing the disk cache */
+	io_flush(&io);
 	for (l = 0; l < state->level; ++l) {
 		ret = parity_sync(&parity_handle[l]);
 		if (ret == -1) {
